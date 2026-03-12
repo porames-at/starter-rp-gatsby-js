@@ -63,22 +63,23 @@ Once the example project is running, you can explore the source code to see how 
 import React from "react"
 import {
   RPProvider,
-  RPDefaultLayout,
+  RPLayout,
   RPPages,
-} from "@pdf-viewer/react";
+} from "@react-pdf-kit/viewer";
 
 const AppPdfViewer = (props) => {
+  // eslint-disable-next-line react/prop-types
   const { showToolbar = true, providerProps, defaultLayoutProps } = props;
 
   return (
     <RPProvider
-      src="https://cdn.codewithmosh.com/image/upload/v1721763853/guides/web-roadmap.pdf"
+      src="https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf"
       {...providerProps}
     >
       {showToolbar ? (
-        <RPDefaultLayout {...defaultLayoutProps}>
+        <RPLayout toolbar {...defaultLayoutProps}>
           <RPPages />
-        </RPDefaultLayout>
+        </RPLayout>
       ) : (
         <div style={{ width: "100%", height: "550px" }}>
           <RPPages />
@@ -87,6 +88,8 @@ const AppPdfViewer = (props) => {
     </RPProvider>
   );
 };
+
+export default AppPdfViewer
 ```
 
 2. **Lazy Load the PDF Viewer Component**: Use React's lazy function to load the AppPdfViewer component only when it's needed
@@ -102,7 +105,7 @@ export const LazyAppPdfViewer =  React.lazy(()=> import("./AppPdfViewer"))
 ```jsx
 import React from "react";
 import { LazyAppPdfViewer } from "../components/LazyAppPdfViewer";
-import { RPConfig } from "@pdf-viewer/react";
+import { RPConfig } from "@react-pdf-kit/viewer";
 
 const IndexPage = () => {
   const isSSR = typeof window === "undefined";
@@ -110,7 +113,7 @@ const IndexPage = () => {
     <>
       {!isSSR && (
         <React.Suspense fallback={<div />}>
-          <RPConfig>
+          <RPConfig workerUrl={'/pdf.worker.min.mjs'}>
             <div className="container">
               <h1>RP Starter Toolkit: Gatsby + JavaScript</h1>
               <br />
@@ -136,6 +139,8 @@ const IndexPage = () => {
     </>
   );
 };
+
+export default IndexPage;
 ```
 
 ## Examples
