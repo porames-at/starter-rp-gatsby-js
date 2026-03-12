@@ -1,6 +1,6 @@
 import React from "react";
 import { LazyAppPdfViewer } from "../components/LazyAppPdfViewer";
-import { RPConfig } from "@pdf-viewer/react";
+import { RPConfig } from "@react-pdf-kit/viewer";
 
 const IndexPage = () => {
   const isSSR = typeof window === "undefined";
@@ -8,7 +8,7 @@ const IndexPage = () => {
     <>
       {!isSSR && (
         <React.Suspense fallback={<div />}>
-          <RPConfig>
+          <RPConfig workerUrl={'/pdf.worker.min.mjs'}>
             <div className="container">
               <h1>RP Starter Toolkit: Gatsby + JavaScript</h1>
               <br />
